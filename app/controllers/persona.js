@@ -1,7 +1,28 @@
 let persona = require('./../models/persona');
 
-exports.getPersonas = function(req, res) {
+  exports.getPersonas = function(req, res) {
     persona.find({}, function(err, task) {
+      if (err)
+        res.send(err);
+      res.json(task);
+    });
+  };
+
+  exports.getPersonaByName = function(req, res) {
+    /*User.findOne({
+      email: req.body.email
+    }, function(err, user) {
+      if (err) throw err;
+      if (!user) {
+        res.status(401).json({ message: 'Authentication failed. User not found.' });
+      } else if (user) {
+        if (!user.comparePassword(req.body.password)) {
+          res.status(401).json({ message: 'Authentication failed. Wrong password.' });
+        } else {
+          return res.json({token: jwt.sign({ email: user.email, fullName: user.fullName, _id: user._id}, 'RESTFULAPIs')});
+        }
+      }*/
+    persona.findOne({ nombre: req.params.nombrePersona }, function(err, task) {
       if (err)
         res.send(err);
       res.json(task);
