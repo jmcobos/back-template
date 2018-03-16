@@ -1,4 +1,4 @@
-let persona = require('./../models/personaModel');
+let persona = require('./../models/persona');
 
 exports.getPersonas = function(req, res) {
     persona.find({}, function(err, task) {
