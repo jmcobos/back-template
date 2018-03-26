@@ -1,3 +1,4 @@
 module.exports = {
-    puerto : 3000
+    puerto : 3000,
+    clave: "tokenultrasecreto"
   };

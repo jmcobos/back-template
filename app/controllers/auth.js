@@ -1,5 +1,7 @@
 let auth = require('./../models/auth');
 let axios = require('axios');
+let config = require('./../../config/initializers/config');
+let jwt = require('jsonwebtoken');
 
 exports.authenticate = function(req, res) {
 
@@ -8,12 +10,14 @@ exports.authenticate = function(req, res) {
 
     const url = 'http://localhost:3000/usuarios/name/' + usuario;
 
+    console.log(url);
+
     axios.get(url)
         .then(function(response) {
             if(response.data !== null) {
                 if(pass === response.data.password) {
-                    // res.json({token: jwt.sign({ email: user.email, fullName: user.fullName, _id: user._id}, 'RESTFULAPIs')});
-                    res.status(200).send(response.data);
+                    var token = jwt.sign({ id: response.data._id }, config.clave, { expiresIn: 1800 });
+                    res.status(200).send({ auth: true, token: token });
                 } else {
                     res.status(401).send('Unauthorized');    
                 }
@@ -22,6 +26,10 @@ exports.authenticate = function(req, res) {
             }
         })
         .catch(function(error) {
-            res.status(500).send("Internal Server Error");
+            res.status(500).send("Internal Server Error" + error);
         });
+};
+
+exports.isAuthenticated = function(req, res) {
+    
 };
