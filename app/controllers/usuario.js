@@ -1,69 +1,55 @@
 let usuario = require('./../models/usuario');
 
-  exports.getPersonas = function(req, res) {
-    usuario.find({}, function(err, task) {
-      if (err)
-        res.send(err);
-      res.json(task);
-    });
-  };
+exports.getPersonas = function(req, res) {
+  usuario.find({}, function(err, task) {
+    if (err)
+      res.send(err);
+    res.json(task);
+  });
+};
 
-  exports.getPersonaByName = function(req, res) {
-    /*User.findOne({
-      email: req.body.email
-    }, function(err, user) {
-      if (err) throw err;
-      if (!user) {
-        res.status(401).json({ message: 'Authentication failed. User not found.' });
-      } else if (user) {
-        if (!user.comparePassword(req.body.password)) {
-          res.status(401).json({ message: 'Authentication failed. Wrong password.' });
-        } else {
-          return res.json({token: jwt.sign({ email: user.email, fullName: user.fullName, _id: user._id}, 'RESTFULAPIs')});
-        }
-      }*/
+exports.getPersonaByName = function(req, res) {
+    usuario.findOne({ usuario: req.params.usuario }, function(err, task) {
+    if (err)
+      res.send(err);
+    res.json(task);
+  });
+};
 
-      usuario.findOne({ usuario: req.params.usuario }, function(err, task) {
-      if (err)
-        res.send(err);
-      res.json(task);
-    });
-  };
-  
-  exports.crearUsuario = function(req, res) {
-    var new_task = new usuario(req.body);
-    new_task.save(function(err, task) {
-      if (err)
-        res.send(err);
-      res.json(task);
-    });
-  };
-  
-  exports.getPersona = function(req, res) {
-    usuario.findById(req.params.idPersona, function(err, task) {
-      if (err)
-        res.send(err);
-      res.json(task);
-    });
-  };
-  
-  exports.updatePersona = function(req, res) {
-    usuario.findOneAndUpdate({_id: req.params.idPersona}, req.body, {new: true}, function(err, task) {
-      if (err)
-        res.send(err);
-      res.json(task);
-    });
-  };
-  
-  exports.deletePersona = function(req, res) {
-    usuario.remove({
-      _id: req.params.idPersona
-    }, function(err, task) {
-      if (err)
-        res.send(err);
-      res.json({ message: 'Persona eliminada correctamente' });
-    });
-  };
+exports.crearUsuario = function(req, res) {
+  var new_task = new usuario(req.body);
+  new_task.save(function(err, task) {
+    if (err)
+      res.send(err);
+    res.json(task);
+  });
+};
+
+exports.getPersona = function(req, res) {
+  usuario.findById(req.params.idPersona, function(err, task) {
+    if (err)
+      res.send(err);
+    res.json(task);
+  });
+};
+
+exports.updatePersona = function(req, res) {
+  usuario.findOneAndUpdate({_id: req.params.idPersona}, req.body, {new: true}, function(err, task) {
+    if (err)
+      res.send(err);
+    res.json(task);
+  });
+};
+
+exports.deletePersona = function(req, res) {
+  usuario.remove({
+    _id: req.params.idPersona
+  }, function(err, task) {
+    if (err)
+      res.send(err);
+    res.json({ message: 'Persona eliminada correctamente' });
+  });
+};
 
 // CREATES A NEW USER
 exports.newPersona = function (req, res) {

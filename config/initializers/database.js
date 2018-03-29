@@ -1,7 +1,8 @@
 let mongoose = require('mongoose');
+let config = require('./../initializers/config');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/guesthome', function(err, res) {
+mongoose.connect(config.database, function(err, res) {
     if(err) {
         console.log('ERROR: No se ha podido conectar a la base de datos. ' + err);
     } else {

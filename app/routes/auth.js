@@ -1,7 +1,9 @@
-let auth = require('express').Router();
+let usuario = express.Router();
+let auth = express.Router();
 
 let authCtrl = require('./../controllers/auth');
+let authorize = require('./../../config/middlewares/auth');
 
-auth.post('/', authCtrl.authenticate);
+auth.Router('/').post(authCtrl.authenticate);
 
 module.exports = auth;

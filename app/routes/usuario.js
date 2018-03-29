@@ -1,12 +1,12 @@
-let usuario = require('express').Router();
+let express = require('express');
+let usuario = express.Router();
 
 let usuarioCtrl = require('./../controllers/usuario');
+let authorize = require('./../../config/middlewares/auth');
 
-usuario.get('/', usuarioCtrl.getPersonas);
-usuario.get('/:idPersona', usuarioCtrl.getPersona);
-
-usuario.get('/name/:usuario', usuarioCtrl.getPersonaByName);
-
-usuario.post('/', usuarioCtrl.newPersona);
+usuario.route('/').get(authorize.isLoggedIn, usuarioCtrl.getPersonas);
+usuario.route('/').post(usuarioCtrl.newPersona);
+usuario.route('/:idPersona').get(authorize.isLoggedIn, usuarioCtrl.getPersona);
+usuario.route('/name/:usuario').get(usuarioCtrl.getPersonaByName);
 
 module.exports = usuario;

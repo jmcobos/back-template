@@ -1,7 +1,7 @@
-let auth = require('./../models/auth');
 let axios = require('axios');
-let config = require('./../../config/initializers/config');
 let jwt = require('jsonwebtoken');
+
+let config = require('./../../config/initializers/config');
 
 exports.authenticate = function(req, res) {
 
@@ -26,10 +26,6 @@ exports.authenticate = function(req, res) {
             }
         })
         .catch(function(error) {
-            res.status(500).send("Internal Server Error" + error);
+            res.status(500).send("Internal Server Error");
         });
-};
-
-exports.isAuthenticated = function(req, res) {
-    
 };
