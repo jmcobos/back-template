@@ -1,6 +1,6 @@
 let usuario = require('./../models/usuario');
 
-exports.getPersonas = function(req, res) {
+exports.getUsuarios = function(req, res) {
   usuario.find({}, function(err, task) {
     if (err)
       res.send(err);
@@ -8,7 +8,15 @@ exports.getPersonas = function(req, res) {
   });
 };
 
-exports.getPersonaByName = function(req, res) {
+exports.getUsuarioById = function(req, res) {
+  usuario.findById(req.params.idPersona, function(err, task) {
+    if (err)
+      res.send(err);
+    res.json(task);
+  });
+};
+
+exports.getUsuarioByName = function(req, res) {
     usuario.findOne({ usuario: req.params.usuario }, function(err, task) {
     if (err)
       res.send(err);
@@ -16,7 +24,7 @@ exports.getPersonaByName = function(req, res) {
   });
 };
 
-exports.crearUsuario = function(req, res) {
+exports.createUsuario = function(req, res) {
   var new_task = new usuario(req.body);
   new_task.save(function(err, task) {
     if (err)
@@ -25,15 +33,7 @@ exports.crearUsuario = function(req, res) {
   });
 };
 
-exports.getPersona = function(req, res) {
-  usuario.findById(req.params.idPersona, function(err, task) {
-    if (err)
-      res.send(err);
-    res.json(task);
-  });
-};
-
-exports.updatePersona = function(req, res) {
+exports.updateUsuario = function(req, res) {
   usuario.findOneAndUpdate({_id: req.params.idPersona}, req.body, {new: true}, function(err, task) {
     if (err)
       res.send(err);
@@ -41,7 +41,7 @@ exports.updatePersona = function(req, res) {
   });
 };
 
-exports.deletePersona = function(req, res) {
+exports.deleteUsuario = function(req, res) {
   usuario.remove({
     _id: req.params.idPersona
   }, function(err, task) {

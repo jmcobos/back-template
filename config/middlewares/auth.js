@@ -1,5 +1,6 @@
-let auth = require('./../../app/controllers/auth');
 let jwt = require('jsonwebtoken');
+
+let auth = require('./../../app/controllers/auth');
 let config = require('./../initializers/config');
 
 const isAuthenticated = {
@@ -18,6 +19,8 @@ const isAuthenticated = {
         
             return next();
         });
+        
+        res.redirect('/');
 
     },
     isSuperUser : function (req, res, next) {

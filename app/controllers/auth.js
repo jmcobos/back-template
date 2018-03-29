@@ -3,19 +3,14 @@ let jwt = require('jsonwebtoken');
 
 let config = require('./../../config/initializers/config');
 
-exports.authenticate = function(req, res) {
+exports.logearse = function(req, res) {
 
-    let usuario = req.body.usuario;
-    let pass = req.body.password;
-
-    const url = 'http://localhost:3000/usuarios/name/' + usuario;
-
-    console.log(url);
+    const url = 'http://localhost:3000/usuarios/name/' + req.body.usuario;
 
     axios.get(url)
         .then(function(response) {
             if(response.data !== null) {
-                if(pass === response.data.password) {
+                if(req.body.password === response.data.password) {
                     var token = jwt.sign({ id: response.data._id }, config.clave, { expiresIn: 1800 });
                     res.status(200).send({ auth: true, token: token });
                 } else {
@@ -29,3 +24,31 @@ exports.authenticate = function(req, res) {
             res.status(500).send("Internal Server Error");
         });
 };
+
+exports.registrarse = function(req, res) {
+    
+    const url = 'http://localhost:3000/usuarios/name/' + req.body.usuario;
+
+    axios.get(url)
+        .then(function(response) {
+            if(response.data !== null) {
+            }
+        })
+        .catch(function(error) {
+            res.status(500).send("Internal Server Error");
+        });
+};
+
+exports.logout = function(req, res) {
+    
+    const url = 'http://localhost:3000/usuarios/name/' + req.body.usuario;
+
+    axios.get(url)
+        .then(function(response) {
+            if(response.data !== null) {
+            }
+        })
+        .catch(function(error) {
+            res.status(500).send("Internal Server Error");
+        });
+}
