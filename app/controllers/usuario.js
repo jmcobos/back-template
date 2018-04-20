@@ -1,20 +1,24 @@
 let usuario = require('./../models/usuario');
 
-exports.getUsuarios = function(req, res) {
-  usuario.find({}, function(err, task) {
-    if (err)
-      res.send(err);
-    res.json(task);
+exports.getUsuarios = function(peticion, respuesta) {
+  usuario.find({}, function(error, usuarios) {
+    if (error) 
+      respuesta.status(500).send(error);
+    respuesta.status(200).send(usuarios);
   });
 };
 
-exports.getUsuarioById = function(req, res) {
-  usuario.findById(req.params.idPersona, function(err, task) {
-    if (err)
-      res.send(err);
-    res.json(task);
+exports.getUsuarioById = function(request, response) {
+  usuario.findById(req.params.idPersona, function(err, usuario) {
+    if (error)
+      return response.send(error);
+    response.json(usuario);
   });
 };
+
+if (err) return res.status(500).send("There was a problem finding the user.");
+        if (!user) return res.status(404).send("No user found.");
+        res.status(200).send(user);
 
 exports.getUsuarioByName = function(req, res) {
     usuario.findOne({ usuario: req.params.usuario }, function(err, task) {
@@ -67,13 +71,7 @@ exports.newPersona = function (req, res) {
     });
 };
 
-// RETURNS ALL THE USERS IN THE DATABASE
-exports.getAll = function (req, res) {
-    usuario.find({}, function (err, users) {
-        if (err) return res.status(500).send("There was a problem finding the users.");
-        res.status(200).send(users);
-    });
-};
+
 
 // GETS A SINGLE USER FROM THE DATABASE
 exports.getById = function (req, res) {

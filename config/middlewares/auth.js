@@ -13,16 +13,14 @@ const isAuthenticated = {
             return res.status(401).send({ auth: false, message: 'No token provided.' });
         
         jwt.verify(token, config.clave, function(err, decoded) {
-            console.log(err);
-            if (err) 
+            if (err) {
                 return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-        
+            }
             return next();
         });
-        
-        res.redirect('/');
 
     },
+    
     isSuperUser : function (req, res, next) {
         if (req.user.is_superuser) {
             return next();
