@@ -36,7 +36,7 @@ exports.postUsuario = function(request, respuesta) {
     if (error)
       return respuesta.status(500).json({ Mensaje: error.message });
     if (!entidad)
-      return respuesta.status(404).json({ Mensaje: "Usuario no creado."});
+      return respuesta.status(404).json({ Mensaje: "Recurso no creado."});
     respuesta.status(200).json(entidad);
   });
 };
@@ -46,8 +46,8 @@ exports.putUsuario = function(request, respuesta) {
     if (error)
       return respuesta.status(500).json({ Mensaje: error.message });
     if (!entidad)
-      return respuesta.status(404).json({ Mensaje: "Usuario no actualizado."});
-    respuesta.status(200).json(entidad);
+      return respuesta.status(404).json({ Mensaje: "Recurso no actualizado."}); 
+    respuesta.status(200).json({ Mensaje: "Recurso actualizado correctamente."});
   });
 };
 
@@ -55,22 +55,8 @@ exports.deleteUsuario = function(request, respuesta) {
   usuario.findByIdAndRemove(request.params.idPersona, function (error, entidad) {
     if (error)
       return respuesta.status(500).send(error);
-    respuesta.status(200).send("Usuario " + usuario.nombre + " ha sido borrado.");
+    if (!entidad)
+      return respuesta.status(404).json({ Mensaje: "Recurso no actualizado."});
+    respuesta.status(200).json({ Mensaje: "Recurso borrado correctamente." });
   });
-};
-
-// GETS A SINGLE USER FROM THE DATABASE
-exports.getById = function (req, res) {
-    usuario.findById(req.params.id, function (err, user) {
-        if (err) return res.status(500).send("There was a problem finding the user.");
-        if (!user) return res.status(404).send("No user found.");
-        res.status(200).send(user);
-    });
-};
-
-exports.put = function (req, res) {
-    usuario.findByIdAndUpdate(req.params.idPersona, req.body, {new: true}, function (err, user) {
-        if (err) return res.status(500).send("There was a problem updating the user.");
-        res.status(200).send(user);
-    });
 };
