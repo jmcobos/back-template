@@ -3,6 +3,7 @@
 'use strict';
 
 let express = require('express');
+let cors = require('cors');
 let app = express();
 
 let db = require('./database');
@@ -11,6 +12,8 @@ let auth = require('./../../app/routes/auth');
 let usuario = require('./../../app/routes/usuario');
 
 let bodyParser = require('body-parser');
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
